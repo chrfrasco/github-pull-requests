@@ -11,7 +11,17 @@ import { parallelRateLimited } from './lib/parallel-rate-limited.mjs';
     .toArray();
 
   const tasks = pullRequests.map(pr => async () => {
-    const result = await githubRequest(pr.url);
+    console.log(`requesting ${pr.url}`);
+    try {
+      const response = await githubRequest(pr.url);
+      const pullRequests = await response.json();
+      await db.collection('pullRequestsDetailed').insertMany(pullRequests);
+      pullRequestCount += pullRequests.length;
+    } catch (error) {
+      await db
+        .collection('failedRequestURLsDetailed')
+        .insertOne({ url: pr.url });
+    }
   });
 
   await parallelRateLimited(TIME_BETWEEN_REQUESTS, tasks);
