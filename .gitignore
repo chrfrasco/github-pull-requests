@@ -1,0 +1,4 @@
+node_modules/
+.Rproj.user
+.ipynb_checkpoints
+data/*.json

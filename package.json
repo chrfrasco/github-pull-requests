@@ -1,0 +1,16 @@
+{
+  "name": "time-to-merge",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "node": "node --experimental-modules",
+    "fetch-prs": "yarn run node scripts/fetch-all-pull-requests.mjs",
+    "fetch-prs:detailed": "yarn run node scripts/fetch-pull-requests-detailed.mjs",
+    "write-from-db": "yarn run node --max-old-space-size=8192 scripts/write-collection-to-file.mjs"
+  },
+  "dependencies": {
+    "isomorphic-fetch": "^2.2.1",
+    "mongodb": "^3.1.10"
+  }
+}
