@@ -2,6 +2,8 @@
 import fetch from 'isomorphic-fetch';
 import { requireENV } from './require-env.mjs';
 
+export const TIME_BETWEEN_REQUESTS = (3600 / 5000) * 1000; // Limited to 5000 requests/hour to the github API
+
 /**
  * @param {string} endpoint
  */

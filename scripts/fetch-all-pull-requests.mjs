@@ -1,9 +1,7 @@
 // @ts-check
 import { parallelRateLimited } from './lib/parallel-rate-limited.mjs';
-import { githubRequest } from './lib/github-request.mjs';
+import { githubRequest, TIME_BETWEEN_REQUESTS } from './lib/github-request.mjs';
 import { connectToDb } from './lib/connect-to-db.mjs';
-
-const TIME_BETWEEN_REQUESTS = (3600 / 5000) * 1000; // Limited to 5000 requests/hour to the github API
 
 (async function main() {
   const { db, client } = await connectToDb();
