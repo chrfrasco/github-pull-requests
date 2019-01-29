@@ -6,13 +6,14 @@ import { connectToDb } from './lib/connect-to-db.mjs';
   const { db, client } = await connectToDb();
 
   const prs = await db
-    .collection('pullRequests')
+    .collection('pullRequestsDetailed')
     .find({})
     .toArray();
   console.log(`read ${prs.length} pull request objects into memory`);
 
-  fs.writeFileSync('./data/pull-requests.json', JSON.stringify(prs));
-  console.log(`wrote prs to ./pull-requests.json`);
+  fs.writeFileSync('./data/pull-requests-detailed.json', JSON.stringify(prs));
+  console.log(`wrote prs to file`);
 
   client.close();
 })();
+

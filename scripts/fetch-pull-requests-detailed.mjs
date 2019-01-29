@@ -10,14 +10,16 @@ import { parallelRateLimited } from './lib/parallel-rate-limited.mjs';
     .find({})
     .toArray();
 
+  let pullRequestCount = 0;
   const tasks = pullRequests.map(pr => async () => {
     console.log(`requesting ${pr.url}`);
     try {
       const response = await githubRequest(pr.url);
       const pullRequests = await response.json();
-      await db.collection('pullRequestsDetailed').insertMany(pullRequests);
+      await db.collection('pullRequestsDetailed').insertOne(pullRequests);
       pullRequestCount += pullRequests.length;
     } catch (error) {
+      console.error(`failed to fetch ${pr.url}: ${error.message}`)
       await db
         .collection('failedRequestURLsDetailed')
         .insertOne({ url: pr.url });
